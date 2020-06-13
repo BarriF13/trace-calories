@@ -1,8 +1,5 @@
 // Item Controller-UI Controller - App - Storage Controller
 
-
-r 
-
 // -1 Item Controller
 const ItemCtrl = (function(){
   console.log('Item controller');
