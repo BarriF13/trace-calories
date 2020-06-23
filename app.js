@@ -34,7 +34,10 @@ const Item = function (id, name , calories){
 //-2 UI Controller
 const UICtrl = (function(){
 
-
+// we have to make UI selector in case id= item-list changes so we just correct it here 
+const UISelectors = {
+  itemList: '#item-list'
+}
 
 
   
@@ -52,7 +55,7 @@ return {
     });
 
     //Insert list to the dom
-    document.querySelector('#item-list').innerHTML = html;
+    document.querySelector(UISelectors.itemList).innerHTML = html;
   }
 }
 
