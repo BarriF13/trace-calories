@@ -12,9 +12,9 @@ const ItemCtrl = (function () {
   //Data structure / State-- data is default
   const data = {
     items: [
-      { id: 0, name: 'Pizza', calories: 800 },
-      { id: 1, name: 'Cake', calories: 400 },
-      { id: 2, name: 'Eggs', calories: 300 }
+      // { id: 0, name: 'Pizza', calories: 800 },
+      // { id: 1, name: 'Cake', calories: 400 },
+      // { id: 2, name: 'Eggs', calories: 300 }
     ],
     currentItem: null,
     totalCalories: 0
@@ -85,6 +85,8 @@ const UICtrl = (function () {
       }
     },
     addListItem: function(item){
+      // show item
+      document.querySelector(UISelectors.itemList).style.display = 'block';
         //create li element
         const li = document.createElement('li');
         // Add class 
@@ -99,13 +101,17 @@ const UICtrl = (function () {
         //Insert item
         document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend', li);
     },
+    clearInput: function(){
+      document.querySelector(UISelectors.itemNameInput).value = '';
+      document.querySelector(UISelectors.itemCaloriesInput).value = '';
+   },
+   hideList: function(){
+      document.querySelector(UISelectors.itemList).style.display = 'none';
+   },
     getSelectors: function(){
       return UISelectors;
-    },
-     clearInput: function(){
-        document.querySelector(UISelectors.itemNameInput).value = '';
-        document.querySelector(UISelectors.itemCaloriesInput).value = '';
-     }
+    }
+  
   }
 
 
@@ -154,9 +160,16 @@ const App = (function (ItemCtrl, UICtrl) {
     init: function () {
       //Fetch items from data structure from itemCtrl 
       const items = ItemCtrl.getItems();
-      
-      // Populate list with items
+
+      // Check if any items
+      if(items.length === 0 ){
+        UICtrl.hideList();
+      } else {
+           // Populate list with items
       UICtrl.populateItemList(items);
+      }
+      
+   
 
       // load event listeners
       loadEventListeners();
