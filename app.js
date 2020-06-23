@@ -36,7 +36,10 @@ const UICtrl = (function () {
 
   // we have to make UI selector in case id= item-list changes so we just correct it here 
   const UISelectors = {
-    itemList: '#item-list'
+    itemList: '#item-list',
+    addBtn: '.add-btn',
+    itemNameInput: '#item-name',
+    itemCaloriesInput: '#item-calories'
   }
   // Public methods-- for printing on the UI
   return {
@@ -55,6 +58,12 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.itemList).innerHTML = html;
     },
     //to access a private method
+    getItemInput: function(){
+      return{
+        name:document.querySelector(UISelectors.itemNameInput).value,
+        calories:document.querySelector(UISelectors.itemCaloriesInput).value
+      }
+    },
     getSelectors: function(){
       return UISelectors;
     }
@@ -70,8 +79,26 @@ const App = (function (ItemCtrl, UICtrl) {
   const loadEventListeners = function(){
     //Get UI selectors
     const UISelectors = UICtrl.getSelectors();
+
+    //Add item event
+    document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
+
   }
 
+  // Add item
+
+  const itemAddSubmit = function(e){
+    //Get form item input from UI Controller
+    const input = UICtrl.getItemInput();
+   // Check for name and calories input
+    if(input.name !== '' && input.calories !== ''){
+      // Add item
+     const newItem =  ItemCtrl.addItem(input.name, input.calories);
+    }
+
+    e.preventDefault();
+
+  }
 
   //-1 it's the new app - we want the app call get items from itemCtrl and then with UICtrl will put it in the list
   // public methods
@@ -79,9 +106,12 @@ const App = (function (ItemCtrl, UICtrl) {
     init: function () {
       //Fetch items from data structure from itemCtrl 
       const items = ItemCtrl.getItems();
-
+      
       // Populate list with items
       UICtrl.populateItemList(items);
+
+      // load event listeners
+      loadEventListeners();
     }
   }
 })(ItemCtrl, UICtrl);
