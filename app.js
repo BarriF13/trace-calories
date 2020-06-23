@@ -40,7 +40,7 @@ const ItemCtrl = (function () {
     newItem = new Item(ID, name, calories);
     // and push it to data structure -- which is an array
     data.items.push(newItem);
-    
+
     return newItem;
 
 
@@ -84,9 +84,28 @@ const UICtrl = (function () {
         calories:document.querySelector(UISelectors.itemCaloriesInput).value
       }
     },
+    addListItem: function(item){
+        //create li element
+        const li = document.createElement('li');
+        // Add class 
+        li.className = 'collection-item';
+        // Add ID
+        li.id = `item-${item.id}`;
+        // Add html
+        li.innerHTML = `<strong>${item.name}: </strong><em>${item.calories} calories</em>
+        <a href="#" class="secondary-content">
+          <i class="edit-item fa fa-pencil"></i>
+        </a>`;
+        //Insert item
+        document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend', li);
+    },
     getSelectors: function(){
       return UISelectors;
-    }
+    },
+     clearInput: function(){
+        document.querySelector(UISelectors.itemNameInput).value = '';
+        document.querySelector(UISelectors.itemCaloriesInput).value = '';
+     }
   }
 
 
@@ -114,6 +133,15 @@ const App = (function (ItemCtrl, UICtrl) {
     if(input.name !== '' && input.calories !== ''){
       // Add item
      const newItem =  ItemCtrl.addItem(input.name, input.calories);
+
+
+
+     // Add item to UI list
+     UICtrl.addListItem(newItem);
+     
+     // Clear form fields
+    UICtrl.clearInput();     
+
     }
 
     e.preventDefault();
