@@ -25,6 +25,26 @@ const ItemCtrl = (function () {
     getItems: function () {
       return data.items;
     },
+    addItem: function(name, calories){
+    // Create id
+    let ID;
+    if(data.items.length > 0 ){
+      ID = data.items[data.items.length-1].id +1; // it adds 1 to the id of the item --[it calculates the index of the item]
+    } else {
+      ID = 0;
+    }
+    // Calories to numbers
+    calories = parseInt(calories);
+    
+    // Create a new item
+    newItem = new Item(ID, name, calories);
+    // and push it to data structure -- which is an array
+    data.items.push(newItem);
+    
+    return newItem;
+
+
+    },
     logData: function () {
       return data;
     }
