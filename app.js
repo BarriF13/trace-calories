@@ -20,12 +20,11 @@ const Item = function (id, name , calories){
     totalCalories: 0
   }
 
-
-
-
-
   // Public methods
   return {
+    getItems: function(){
+      return data.items;
+    },
     logData: function(){
       return data;
     }
@@ -39,9 +38,22 @@ const UICtrl = (function(){
 
 
   
-// Public methods
+// Public methods-- for printing on the UI
 return {
+  populateItemList: function(items){
+    let html = '';
+    items.forEach(function(item){
+      html += `<li class = "collection-item" id="item-${item.id}">
+      <strong>${item.name}: </strong><em>${item.calories} calories</em>
+      <a href="#" class="secondary-content">
+        <i class="edit-item fa fa-pencil"></i>
+      </a>
+    </li>`;
+    });
 
+    //Insert list to the dom
+    document.querySelector('#item-list').innerHTML = html;
+  }
 }
 
 
@@ -52,14 +64,14 @@ return {
 const App = (function(ItemCtrl, UICtrl){
   
     //-1 it's the new app - we want the app call get items from itemCtrl and then with UICtrl will put it in the list
-
-
-
-
-    // public methods
+   // public methods
     return {
       init: function(){
-        console.log('Initializing App...');
+        //Fetch items from data structure from itemCtrl 
+        const items = ItemCtrl.getItems();
+
+        // Populate list with items
+        UICtrl.populateItemList(items);
       }
     }
 })(ItemCtrl, UICtrl); 
