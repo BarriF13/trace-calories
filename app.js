@@ -4,7 +4,7 @@ const StorageCtrl = (function(){
   // Public meth
   return {
     storeItem: function(item){
-      let items = [];
+      let items;
       // Check if any item in LS
       if(localStorage.getItem('items') === null){
         items = [];
@@ -22,6 +22,18 @@ const StorageCtrl = (function(){
         // Re set LS
         localStorage.setItem('items', JSON.stringify(items));
       }
+    },
+    getItemsFromStorage: function(){
+      let items;
+      if(localStorage.getItem('items') === null){
+        items=[];
+       
+      } else {
+        // Get what is in ls already
+        items = JSON.parse(localStorage.getItem('items'));
+
+      }
+      return items;
     }
   }
 })();
@@ -36,11 +48,12 @@ const ItemCtrl = (function () {
   }
   //Data structure / State-- data is default
   const data = {
-    items: [
-      // { id: 0, name: 'Pizza', calories: 800 },
-      // { id: 1, name: 'Cake', calories: 400 },
-      // { id: 2, name: 'Eggs', calories: 300 }
-    ],
+    // items: [
+    //   // { id: 0, name: 'Pizza', calories: 800 },
+    //   // { id: 1, name: 'Cake', calories: 400 },
+    //   // { id: 2, name: 'Eggs', calories: 300 }
+    // ],
+    items:  StorageCtrl.getItemsFromStorage(),
     currentItem: null,
     totalCalories: 0
   }
