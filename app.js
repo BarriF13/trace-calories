@@ -4,7 +4,24 @@ const StorageCtrl = (function(){
   // Public meth
   return {
     storeItem: function(item){
+      let items = [];
+      // Check if any item in LS
+      if(localStorage.getItem('items') === null){
+        items = [];
+        // Push new item
+        items.push(item);
+        //Set ls
+        localStorage.setItem('items', JSON.stringify(items));
+      } else {
+        // Get what is in ls already
+        items = JSON.parse(localStorage.getItem('items'));
 
+        // Push new item 
+        items.push(item);
+
+        // Re set LS
+        localStorage.setItem('items', JSON.stringify(items));
+      }
     }
   }
 })();
