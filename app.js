@@ -74,7 +74,7 @@ const ItemCtrl = (function () {
       // Get ids
 
      const ids = data.items.map(function(item){
-        return item.is;
+        return item.id;
       });
 
       // Get index 
@@ -343,7 +343,16 @@ const App = (function (ItemCtrl, UICtrl) {
       ItemCtrl.deleteItem(currentItem.id);
 
     //Delete from UI
-    UICtrl.deleteListItem(deleteItem.id);
+    UICtrl.deleteListItem(currentItem.id);
+
+     // Get total calories
+     const totalCalories = ItemCtrl.getTotalCalories();
+     // Add total calories to UI
+     UICtrl.showTotalCalories(totalCalories);
+
+     // Clear form fields
+     UICtrl.clearInput();
+
     e.preventDefault();
   }
 
