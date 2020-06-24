@@ -1,5 +1,13 @@
 // Item Controller-UI Controller - App - Storage Controller
+const StorageCtrl = (function(){
 
+  // Public meth
+  return {
+    storeItem: function(item){
+
+    }
+  }
+})();
 // -1 Item Controller----------------------------------------------------------------------------------
 const ItemCtrl = (function () {
   // we need to make item so == item constructor
@@ -244,7 +252,7 @@ const UICtrl = (function () {
 //
 //-3 App Controller is app ctrl and this is the main controller--- we want to init the app
 
-const App = (function (ItemCtrl, UICtrl) {
+const App = (function (ItemCtrl, StorageCtrl, UICtrl) {
   // load event listeners
   const loadEventListeners = function () {
     //Get UI selectors
@@ -293,6 +301,8 @@ const App = (function (ItemCtrl, UICtrl) {
       // Add total calories to UI
       UICtrl.showTotalCalories(totalCalories);
 
+      //Store on local S  
+      StorageCtrl.storeItem(newItem);
       // Clear form fields
       UICtrl.clearInput();
 
@@ -415,7 +425,7 @@ const App = (function (ItemCtrl, UICtrl) {
       loadEventListeners();
     }
   }
-})(ItemCtrl, UICtrl);
+})(ItemCtrl, StorageCtrl, UICtrl);
 
 // initialize App
 App.init();
